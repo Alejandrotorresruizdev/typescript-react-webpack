@@ -41,8 +41,14 @@ module.exports = (env,argv) => {
       rules
     },
     output: {
+      chunkFilename: "js/[name].[contenthash].js",
       filename: isProduction ? '[name].[contenthash].js' : 'main.js',
       path: path.resolve(__dirname, "build"),
+    },
+    optimization: {
+      splitChunks: {
+        chunks: "all",
+      },
     },
     devServer: {
       port: 3333,
