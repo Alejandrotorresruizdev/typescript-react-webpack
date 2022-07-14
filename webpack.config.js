@@ -1,61 +1,54 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable prettier/prettier */
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { HotModuleReplacementPlugin } = require("webpack");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ruleForCss = {
-    test: /\.css$/,
-    use: ['style-loader', 'css-loader']
-}
+  test: /\.css$/,
+  use: ['style-loader', 'css-loader'],
+};
 
 const ruleForTypeScript = {
-    test: /\.(ts|tsx)$/,
-    exclude: /node_modules/,
-    loader: "babel-loader",
-    options: {
-      "presets": [
-        [
-          "@babel/preset-react",
-          {
-            "runtime": "automatic" 
-          }
-        ]
-      ]
-    } 
-}
+  test: /\.(ts|tsx)$/,
+  exclude: /node_modules/,
+  loader: 'babel-loader',
+  options: {
+    presets: [
+      [
+        '@babel/preset-react',
+        {
+          runtime: 'automatic',
+        },
+      ],
+    ],
+  },
+};
 
-const rules = [ruleForTypeScript,ruleForCss];
+const rules = [ruleForTypeScript, ruleForCss];
 
-module.exports = (env,argv) => {  
-  const {mode} = argv;
+module.exports = (env, argv) => {
+  const { mode } = argv;
   const isProduction = mode === 'production';
 
   return {
     //devtool:'source-map',
-    entry: "./src/App.tsx",
+    entry: './src/App.tsx',
     resolve: {
-      extensions: [".ts", ".tsx", ".js"],
+      extensions: ['.ts', '.tsx', '.js'],
     },
     module: {
-      rules
+      rules,
     },
     output: {
-      chunkFilename: "js/[name].[contenthash].js",
       filename: isProduction ? '[name].[contenthash].js' : 'main.js',
-      path: path.resolve(__dirname, "build"),
-    },
-    optimization: {
-      splitChunks: {
-        chunks: "all",
-      },
+      path: path.resolve(__dirname, 'build'),
     },
     devServer: {
       port: 3333,
-      hot: true,
       open: true,
       static: './build',
       compress: true,
+      historyApiFallback: true,
       client: {
         overlay: {
           errors: true,
@@ -64,11 +57,10 @@ module.exports = (env,argv) => {
       },
     },
     plugins: [
-      new HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         showErrors: true,
-        template: path.join("src/index.html"),
+        template: path.join('src/index.html'),
       }),
     ],
-  }
+  };
 };
