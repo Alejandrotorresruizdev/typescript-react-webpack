@@ -10,7 +10,7 @@ const HelloWorld = () => {
   return (
     <div className="container">
       <p>Hello World</p>
-      <img src={SvgImage} alt="Girl in a jacket" width="500" height="600" />
+      <img src={Image2} alt="Girl in a jacket" width="500" height="600" />
       <Stack direction="row" spacing={2}>
         <Button variant="outlined" startIcon={<DeleteIcon />}>
           Delete

@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const ruleForImages = {
@@ -73,8 +71,11 @@ module.exports = (env, argv) => {
       open: true,
       static: './build',
       compress: true,
+      hot: true,
       historyApiFallback: true,
       client: {
+        progress: true,
+        logging: 'info',
         overlay: {
           errors: true,
           warnings: true,
@@ -89,7 +90,7 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: !isProduction
           ? 'assets/css/[name].css'
-          : 'assets/css/[name].[contenthash].css'
+          : 'assets/css/[name].[contenthash].css',
       }),
     ],
   };
