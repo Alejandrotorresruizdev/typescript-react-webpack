@@ -2,10 +2,25 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const ruleForImages = {
+  test: /\.(png|jpe?g)$/,
+  type: 'asset/resource',
+};
+
+const ruleForFonts = {
+  test: /\.(woff2?|ttf|eot)(\?v=\w+)?$/,
+  type: 'asset/resource',
+  generator: {
+    filename: 'assets/fonts/[hash][ext]',
+  },
+};
 
 const ruleForCss = {
-  test: /\.css$/,
-  use: ['style-loader', 'css-loader'],
+  test: /\.css$/i,
+  use: [MiniCssExtractPlugin.loader, 'css-loader'],
 };
 
 const ruleForTypeScript = {
@@ -24,18 +39,24 @@ const ruleForTypeScript = {
   },
 };
 
-const rules = [ruleForTypeScript, ruleForCss];
+const rules = [ruleForTypeScript, ruleForCss, ruleForImages, ruleForFonts];
+
+const alias = {
+  Images: path.resolve(__dirname, 'src/images'),
+  Styles: path.resolve(__dirname, 'src/styles'),
+};
 
 module.exports = (env, argv) => {
   const { mode } = argv;
-  console.log(argv)
+  console.log(argv);
   const isProduction = mode === 'production';
-
   return {
-    //devtool:'source-map',
+    // devtool: 'source-map',
+    performance: { hints: false },
     entry: './src/App.tsx',
     resolve: {
-      extensions: ['.ts', '.tsx', '.js'],
+      alias: alias,
+      extensions: ['.ts', '.tsx', '.js', '.png'],
     },
     module: {
       rules,
@@ -43,9 +64,10 @@ module.exports = (env, argv) => {
     output: {
       filename: isProduction ? '[name].[contenthash].js' : 'main.js',
       path: path.resolve(__dirname, 'build'),
+      assetModuleFilename: 'assets/images/[hash][ext][query]',
     },
     optimization: {
-      minimize: true
+      minimize: true,
     },
     devServer: {
       port: 3333,
@@ -64,6 +86,11 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         showErrors: true,
         template: path.join('src/index.html'),
+      }),
+      new MiniCssExtractPlugin({
+        filename: !isProduction
+          ? 'assets/css/[name].css'
+          : 'assets/css/[name].[contenthash].css'
       }),
     ],
   };
