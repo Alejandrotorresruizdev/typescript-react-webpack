@@ -48,7 +48,6 @@ const alias = {
 
 module.exports = (env, argv) => {
   const { mode } = argv;
-  console.log(argv);
   const isProduction = mode === 'production';
   return {
     // devtool: 'source-map',
@@ -62,7 +61,7 @@ module.exports = (env, argv) => {
       rules,
     },
     output: {
-      filename: isProduction ? '[name].[contenthash].js' : 'main.js',
+      filename: isProduction ? 'js/[name].[contenthash].js' : 'js/main.js',
       path: path.resolve(__dirname, 'build'),
       assetModuleFilename: 'assets/images/[hash][ext][query]',
     },
