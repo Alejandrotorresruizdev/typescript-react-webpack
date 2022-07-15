@@ -1,4 +1,18 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Black.ttf') format('woff2');
+  font-weight: bold;
+  font-display: swap;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
 p {
-    font-size: 1rem;
-    color:red;
+  font-size: 1rem;
+  color: red;
 }
