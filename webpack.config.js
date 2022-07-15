@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const ruleForImages = {
-  test: /\.(png|jpe?g)$/,
+  test: /\.(png|svg|jpe?g)$/,
   type: 'asset/resource',
 };
 
