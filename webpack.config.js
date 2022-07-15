@@ -28,6 +28,7 @@ const rules = [ruleForTypeScript, ruleForCss];
 
 module.exports = (env, argv) => {
   const { mode } = argv;
+  console.log(argv)
   const isProduction = mode === 'production';
 
   return {
@@ -42,6 +43,9 @@ module.exports = (env, argv) => {
     output: {
       filename: isProduction ? '[name].[contenthash].js' : 'main.js',
       path: path.resolve(__dirname, 'build'),
+    },
+    optimization: {
+      minimize: true
     },
     devServer: {
       port: 3333,
